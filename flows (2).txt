@@ -217,7 +217,7 @@
         "payonly": true,
         "operation": "insert",
         "x": 310,
-        "y": 80,
+        "y": 40,
         "wires": []
     },
     {
@@ -333,7 +333,7 @@
         "z": "5796dc87.2e72d4",
         "name": "",
         "cloudant": "",
-        "database": "user",
+        "database": "admin",
         "service": "node-red-ifvoy-cloudant-1590470643830-75077",
         "search": "_id_",
         "design": "",
@@ -595,12 +595,12 @@
         "z": "5796dc87.2e72d4",
         "name": "",
         "cloudant": "",
-        "database": "user",
+        "database": "traffic_police",
         "service": "node-red-ifvoy-cloudant-1590470643830-75077",
         "search": "_id_",
         "design": "",
         "index": "",
-        "x": 550,
+        "x": 570,
         "y": 1220,
         "wires": [
             [
