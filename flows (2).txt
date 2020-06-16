@@ -1,0 +1,915 @@
+[
+    {
+        "id": "5796dc87.2e72d4",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9712453f.50df58",
+        "type": "ui_form",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "label": "",
+        "group": "f0e2da2f.7bd558",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Enter name",
+                "value": "name",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter email ",
+                "value": "email",
+                "type": "email",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter phone",
+                "value": "phno",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter password",
+                "value": "pwd",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "name": "",
+            "email": "",
+            "phno": "",
+            "pwd": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "reset",
+        "topic": "",
+        "x": 50,
+        "y": 60,
+        "wires": [
+            [
+                "a0aa2157.358c1",
+                "30ea53ac.19addc"
+            ]
+        ]
+    },
+    {
+        "id": "938706fc.4c4888",
+        "type": "cloudant in",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "cloudant": "",
+        "database": "user",
+        "service": "node-red-ifvoy-cloudant-1590470643830-75077",
+        "search": "_id_",
+        "design": "",
+        "index": "",
+        "x": 510,
+        "y": 260,
+        "wires": [
+            [
+                "720ee09b.99852",
+                "b8b57da.f7b328"
+            ]
+        ]
+    },
+    {
+        "id": "ab0f6e23.5e016",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "global.set('email',msg.payload.email)\nglobal.set('password',msg.payload.pwd)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "94845b58.83db78"
+            ]
+        ]
+    },
+    {
+        "id": "94845b58.83db78",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "var email=global.get('email')\nmsg.payload={\n    \"_id\":email\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520,
+        "y": 380,
+        "wires": [
+            [
+                "938706fc.4c4888"
+            ]
+        ]
+    },
+    {
+        "id": "720ee09b.99852",
+        "type": "debug",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 560,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b8b57da.f7b328",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "var pwd=global.get('password')\nif (pwd==msg.payload.Password)\n    msg.payload=\"login successful\"\nelse\n    msg.payload=\"try again\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "41695472.98568c"
+            ]
+        ]
+    },
+    {
+        "id": "41695472.98568c",
+        "type": "ui_text",
+        "z": "5796dc87.2e72d4",
+        "group": "594a6862.1a9a88",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 410,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "3b7dd832.6d49d8",
+        "type": "ui_form",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "label": "",
+        "group": "594a6862.1a9a88",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "enter email",
+                "value": "email",
+                "type": "email",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "enter password",
+                "value": "pwd",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "email": "",
+            "pwd": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "reset",
+        "topic": "",
+        "x": 210,
+        "y": 320,
+        "wires": [
+            [
+                "ab0f6e23.5e016"
+            ]
+        ]
+    },
+    {
+        "id": "ccf28958.89ad18",
+        "type": "cloudant out",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "cloudant": "",
+        "database": "user",
+        "service": "node-red-ifvoy-cloudant-1590470643830-75077",
+        "payonly": true,
+        "operation": "insert",
+        "x": 310,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a0aa2157.358c1",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "msg.payload={\n    \"_id\":msg.payload.email,\n    \"Name\":msg.payload.name,\n    \"Email\":msg.payload.email,\n    \"Password\":msg.payload.pwd,\n    \"PhoneNumber\":msg.payload.phno\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "ccf28958.89ad18"
+            ]
+        ]
+    },
+    {
+        "id": "45e54c54.35bf64",
+        "type": "ui_text",
+        "z": "5796dc87.2e72d4",
+        "group": "f0e2da2f.7bd558",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 240,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "30ea53ac.19addc",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "msg.payload=\"thank you \" + msg.payload.name\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 100,
+        "y": 240,
+        "wires": [
+            [
+                "45e54c54.35bf64"
+            ]
+        ]
+    },
+    {
+        "id": "9f97f399.015ca",
+        "type": "ui_form",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "label": "",
+        "group": "675804fa.16065c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Enter name",
+                "value": "name",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter email ",
+                "value": "email",
+                "type": "email",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter phone",
+                "value": "phno",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter password",
+                "value": "pwd",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "name": "",
+            "email": "",
+            "phno": "",
+            "pwd": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "reset",
+        "topic": "",
+        "x": 90,
+        "y": 480,
+        "wires": [
+            [
+                "6629d582.0a1b5c",
+                "6e81edc0.9b37f4"
+            ]
+        ]
+    },
+    {
+        "id": "f5f6ea0d.de1ea8",
+        "type": "cloudant in",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "cloudant": "",
+        "database": "user",
+        "service": "node-red-ifvoy-cloudant-1590470643830-75077",
+        "search": "_id_",
+        "design": "",
+        "index": "",
+        "x": 550,
+        "y": 680,
+        "wires": [
+            [
+                "3f29c6ca.37683a",
+                "4c8449f9.849fd8"
+            ]
+        ]
+    },
+    {
+        "id": "d457e77c.993fd8",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "global.set('email',msg.payload.email)\nglobal.set('password',msg.payload.pwd)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 740,
+        "wires": [
+            [
+                "8fc5455d.38ec48"
+            ]
+        ]
+    },
+    {
+        "id": "8fc5455d.38ec48",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "var email=global.get('email')\nmsg.payload={\n    \"_id\":email\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 800,
+        "wires": [
+            [
+                "f5f6ea0d.de1ea8"
+            ]
+        ]
+    },
+    {
+        "id": "3f29c6ca.37683a",
+        "type": "debug",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 600,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "4c8449f9.849fd8",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "var pwd=global.get('password')\nif (pwd==msg.payload.Password)\n    msg.payload=\"login successful\"\nelse\n    msg.payload=\"try again\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 620,
+        "wires": [
+            [
+                "966359cc.077b18"
+            ]
+        ]
+    },
+    {
+        "id": "966359cc.077b18",
+        "type": "ui_text",
+        "z": "5796dc87.2e72d4",
+        "group": "ed390d5a.72fdc",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 450,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "cc3c722d.e9e22",
+        "type": "ui_form",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "label": "",
+        "group": "ed390d5a.72fdc",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "enter email",
+                "value": "email",
+                "type": "email",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "enter password",
+                "value": "pwd",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "email": "",
+            "pwd": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 250,
+        "y": 740,
+        "wires": [
+            [
+                "d457e77c.993fd8"
+            ]
+        ]
+    },
+    {
+        "id": "6aadd662.7af358",
+        "type": "cloudant out",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "cloudant": "",
+        "database": "admin",
+        "service": "node-red-ifvoy-cloudant-1590470643830-75077",
+        "payonly": true,
+        "operation": "insert",
+        "x": 350,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6629d582.0a1b5c",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "msg.payload={\n    \"_id\":msg.payload.email,\n    \"Name\":msg.payload.name,\n    \"Email\":msg.payload.email,\n    \"Password\":msg.payload.pwd,\n    \"PhoneNumber\":msg.payload.phno\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 220,
+        "y": 580,
+        "wires": [
+            [
+                "6aadd662.7af358"
+            ]
+        ]
+    },
+    {
+        "id": "e8aca3c8.68a04",
+        "type": "ui_text",
+        "z": "5796dc87.2e72d4",
+        "group": "675804fa.16065c",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 280,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "6e81edc0.9b37f4",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "msg.payload=\"thank you \" + msg.payload.name\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 140,
+        "y": 660,
+        "wires": [
+            [
+                "e8aca3c8.68a04"
+            ]
+        ]
+    },
+    {
+        "id": "94210ee4.2fe0d",
+        "type": "ui_form",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "label": "",
+        "group": "6d7199c6.c56c38",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Enter name",
+                "value": "name",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter email ",
+                "value": "email",
+                "type": "email",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter phone",
+                "value": "phno",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Enter password",
+                "value": "pwd",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "name": "",
+            "email": "",
+            "phno": "",
+            "pwd": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "reset",
+        "topic": "",
+        "x": 90,
+        "y": 1020,
+        "wires": [
+            [
+                "831ed4cf.ab6588",
+                "25e3149c.c314ec"
+            ]
+        ]
+    },
+    {
+        "id": "5a6f0a9a.651c44",
+        "type": "cloudant in",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "cloudant": "",
+        "database": "user",
+        "service": "node-red-ifvoy-cloudant-1590470643830-75077",
+        "search": "_id_",
+        "design": "",
+        "index": "",
+        "x": 550,
+        "y": 1220,
+        "wires": [
+            [
+                "3c35b674.87f96a",
+                "ce8d6dc7.8669b"
+            ]
+        ]
+    },
+    {
+        "id": "14c515b6.0228da",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "global.set('email',msg.payload.email)\nglobal.set('password',msg.payload.pwd)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 1280,
+        "wires": [
+            [
+                "1112b6c0.600ac9"
+            ]
+        ]
+    },
+    {
+        "id": "1112b6c0.600ac9",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "var email=global.get('email')\nmsg.payload={\n    \"_id\":email\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 1340,
+        "wires": [
+            [
+                "5a6f0a9a.651c44"
+            ]
+        ]
+    },
+    {
+        "id": "3c35b674.87f96a",
+        "type": "debug",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 600,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "ce8d6dc7.8669b",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "var pwd=global.get('password')\nif (pwd==msg.payload.Password)\n    msg.payload=\"login successful\"\nelse\n    msg.payload=\"try again\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 1160,
+        "wires": [
+            [
+                "2f8955bb.34656a"
+            ]
+        ]
+    },
+    {
+        "id": "2f8955bb.34656a",
+        "type": "ui_text",
+        "z": "5796dc87.2e72d4",
+        "group": "61030211.0764ec",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 450,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "25cf538a.70679c",
+        "type": "ui_form",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "label": "",
+        "group": "61030211.0764ec",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "enter email",
+                "value": "email",
+                "type": "email",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "enter password",
+                "value": "pwd",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "email": "",
+            "pwd": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "reset",
+        "topic": "",
+        "x": 250,
+        "y": 1280,
+        "wires": [
+            [
+                "14c515b6.0228da"
+            ]
+        ]
+    },
+    {
+        "id": "5852d9a7.dbc458",
+        "type": "cloudant out",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "cloudant": "",
+        "database": "traffic_police",
+        "service": "node-red-ifvoy-cloudant-1590470643830-75077",
+        "payonly": true,
+        "operation": "insert",
+        "x": 370,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "831ed4cf.ab6588",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "msg.payload={\n    \"_id\":msg.payload.email,\n    \"Name\":msg.payload.name,\n    \"Email\":msg.payload.email,\n    \"Password\":msg.payload.pwd,\n    \"PhoneNumber\":msg.payload.phno\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 220,
+        "y": 1120,
+        "wires": [
+            [
+                "5852d9a7.dbc458"
+            ]
+        ]
+    },
+    {
+        "id": "eb098860.a0c788",
+        "type": "ui_text",
+        "z": "5796dc87.2e72d4",
+        "group": "6d7199c6.c56c38",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 280,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "25e3149c.c314ec",
+        "type": "function",
+        "z": "5796dc87.2e72d4",
+        "name": "",
+        "func": "msg.payload=\"thank you \" + msg.payload.name\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 140,
+        "y": 1200,
+        "wires": [
+            [
+                "eb098860.a0c788"
+            ]
+        ]
+    },
+    {
+        "id": "f0e2da2f.7bd558",
+        "type": "ui_group",
+        "z": "",
+        "name": "register",
+        "tab": "e131df2.9b4ae2",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "594a6862.1a9a88",
+        "type": "ui_group",
+        "z": "",
+        "name": "login",
+        "tab": "1b833827.44d518",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "675804fa.16065c",
+        "type": "ui_group",
+        "z": "",
+        "name": "admin",
+        "tab": "1d038ddc.4845e2",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ed390d5a.72fdc",
+        "type": "ui_group",
+        "z": "",
+        "name": "login",
+        "tab": "b374d1b2.456b8",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "6d7199c6.c56c38",
+        "type": "ui_group",
+        "z": "",
+        "name": "traffic_police",
+        "tab": "a771a2b5.50e4d",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "61030211.0764ec",
+        "type": "ui_group",
+        "z": "",
+        "name": "login",
+        "tab": "9616fb3.232a108",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e131df2.9b4ae2",
+        "type": "ui_tab",
+        "z": "",
+        "name": "create account",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "1b833827.44d518",
+        "type": "ui_tab",
+        "z": "",
+        "name": "user",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "1d038ddc.4845e2",
+        "type": "ui_tab",
+        "z": "",
+        "name": "create admin",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b374d1b2.456b8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "admin",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "a771a2b5.50e4d",
+        "type": "ui_tab",
+        "z": "",
+        "name": "create traffic_police",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "9616fb3.232a108",
+        "type": "ui_tab",
+        "z": "",
+        "name": "traffic_police",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
