@@ -400,10 +400,11 @@ def booking():
                 new_rem = int(num_seats) - int(nop)
                 cur.execute("UPDATE buses SET rem=(?) WHERE id=(?)", (new_rem, idbus))
                 con.commit()
-                client = Client("AC25efff9599401a3789a4b48b7bf19fac", "73ccf19912d3066d281d9c01bffdf10b")
-                client.messages.create(to="+91"+str(num), 
-                       from_="+12569523813", 
-                       body="Ticket booking success!")
+                #twilio module for sending messages-create account in tilio and give your credentials if upgraded can send message to any number otherwise to your registered number
+                #client = Client("AC25efff9599401a3789a4b48b7bf19fac", "73ccf19912d3066d281d9c01bffdf10b")
+                #client.messages.create(to="+91"+str(num), 
+                       #from_="+12569523813", 
+                       #body="Ticket booking success!")
                 msg = "Booking success"
         except:
             con.rollback()
