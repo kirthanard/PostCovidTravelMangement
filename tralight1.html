@@ -1,0 +1,389 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Traffic Light</title>
+  <style>
+  body {
+	background-image: url('https://rhinobooksnashville.com/wp-content/uploads/2019/06/30459708568_7b45f32c1c_o.jpg');
+  font-family: sans-serif;
+}
+
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.control-panel {
+  float: right;
+  padding-top: 30px;
+}
+
+.traffic-light {
+	position: absolute;
+    left: 300px;
+    top: 30px;
+  float: left;
+  margin: 30px 0;
+  padding: 20px;
+  width: 50px;
+  height: 180px;
+  background-color: #333;
+  border-radius: 40px;
+}
+
+
+.traffic-light1 {
+	position: absolute;
+    left: 300px;
+    top: 440px;
+  float: right;
+  margin: 30px 0;
+  padding: 20px;
+  width: 50px;
+  height: 180px;
+  background-color: #333;
+  border-radius: 40px;
+}
+
+
+.traffic-light2 {
+	position: absolute;
+    left: 150px;
+    top: 220px;
+  float: left;
+  margin: 30px 0;
+  padding: 20px;
+  width: 50px;
+  height: 180px;
+  background-color: #333;
+  border-radius: 40px;
+}
+
+
+.traffic-light3 {
+	position: absolute;
+    left: 450px;
+    top: 220px;
+  float: right;
+  margin: 30px 0;
+  padding: 20px;
+  width: 50px;
+  height: 180px;
+  background-color: #333;
+  border-radius: 40px;
+}
+
+.bulb {
+  margin: 15px auto;
+  width: 40px;
+  height: 40px;
+  background-color: #111;
+  border-radius: 50%;
+  transition: background 500ms;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+background: #00004d;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+</style>
+</head>
+<body>
+<ul>
+<li><a>TRAFFIC LIGHT SIMULATION</a></li>
+ <li style="float:right"><a href="/user.html">Sign up</a></li>
+  <li style="float:right"><a class="active" href="#">Home</a></li>
+  <li style="float:right"><a href="/logout">About</a></li>
+</ul>
+
+  <div class="traffic-light">
+    <div id="stopLight" class="bulb"></div>
+    <div id="slowLight" class="bulb"></div>
+    <div id="goLight" class="bulb"></div>
+  </div>
+  
+  
+ 
+
+  <div class="traffic-light1">
+    <div id="stopLight1" class="bulb"></div>
+    <div id="slowLight1" class="bulb"></div>
+    <div id="goLight1" class="bulb"></div>
+  </div>
+   
+
+  <div class="traffic-light2">
+    <div id="stopLight2" class="bulb"></div>
+    <div id="slowLight2" class="bulb"></div>
+    <div id="goLight2" class="bulb"></div>
+  </div>
+   
+
+  <div class="traffic-light3">
+    <div id="stopLight3" class="bulb"></div>
+    <div id="slowLight3" class="bulb"></div>
+    <div id="goLight3" class="bulb"></div>
+  </div>
+<div class="control-panel">
+ <button class="button" id="start simulation">Startsimulation</button>
+  
+<button class="button" onclick="myStopFunction()">Stop time</button>
+  </div>
+<script type="text/javascript">
+
+//document.getElementById("stopButton").onclick = illuminateRed;
+//document.getElementById("slowButton").onclick = illuminateYellow;
+//document.getElementById("goButton").onclick = illuminateGreen;
+document.getElementById("start simulation").onclick = simulation;
+const circles = JSON.parse('{{ ind | tojson | safe}}');
+//document.write(circles);
+//document.write(name[0]);
+//document.write(circles[1]);
+//document.write(circles[2]);
+//document.write(ind);
+
+//const circles = name;
+//document.write(circles[0]);
+
+let activeLight = 0;
+//document.write(circles[activeLight]);
+var keepGoing=true;
+function simulation(){
+	setInterval(() => {
+	if (keepGoing){
+		if (activeLight > circles.length-1){
+			activeLight=0;
+			var act=circles[activeLight]
+			start(act);
+			activeLight++;
+		}
+		else {
+			var act=circles[activeLight]
+			start(act);
+			activeLight++;
+			}
+			}
+	
+	},3000);
+}
+
+
+
+function start(act) {
+if (circles.length==4){
+	if (act==1){
+		illuminateYellow();
+		setTimeout(function(){
+		illuminateGreen();
+		}, 1000);
+	illuminateRed1();
+	illuminateRed2();
+	illuminateRed3();
+	}
+	else if (act==2){
+	illuminateYellow1();
+	setTimeout(function(){
+		illuminateGreen1();
+		}, 1000);
+
+	illuminateRed2();
+	illuminateRed3();
+	illuminateRed();
+	}
+	else if (act==3) {
+	illuminateYellow2();
+	setTimeout(function(){
+		illuminateGreen2();
+		}, 1000);
+	illuminateRed();
+	illuminateRed3();
+	illuminateRed1();
+	}
+	else{
+	illuminateYellow3();
+	setTimeout(function(){
+		illuminateGreen3();
+		}, 1000);
+	illuminateRed();
+	illuminateRed2();
+	illuminateRed1();
+	}
+	
+}
+else if(circles.length==3){
+if (act==1){
+		illuminateYellow();
+		setTimeout(function(){
+		illuminateGreen();
+		}, 1000);
+	illuminateRed1();
+	illuminateRed2();
+	}
+	else if (act==2){
+		illuminateYellow1();
+	setTimeout(function(){
+		illuminateGreen1();
+		}, 1000);
+	illuminateRed();
+	illuminateRed2();
+	}
+	else {
+	illuminateYellow2();
+	setTimeout(function(){
+		illuminateGreen2();
+		}, 1000);
+	illuminateRed();
+	illuminateRed1();
+}
+}
+else {
+if (act==1){
+		illuminateYellow();
+		setTimeout(function(){
+		illuminateGreen();
+		}, 1000);
+	illuminateRed1();
+	}
+	else {
+		illuminateYellow1();
+	setTimeout(function(){
+		illuminateGreen1();
+		}, 1000);
+	illuminateRed();
+	}
+	}
+	}
+
+function myStopFunction() {
+  keepGoing = false;
+}
+		
+
+function illuminateRed() {
+  clearLights();
+  document.getElementById('stopLight').style.backgroundColor = "red";
+}
+
+function illuminateYellow() {
+  clearLights();
+  document.getElementById('slowLight').style.backgroundColor = "yellow";
+}
+
+function illuminateGreen() {
+  clearLights();
+  document.getElementById('goLight').style.backgroundColor   = "green";
+}
+
+function clearLights() {
+  document.getElementById('stopLight').style.backgroundColor = "black";
+  document.getElementById('slowLight').style.backgroundColor = "black";
+  document.getElementById('goLight').style.backgroundColor   = "black";
+}
+
+
+function illuminateRed1() {
+  clearLights1();
+  document.getElementById('stopLight1').style.backgroundColor = "red";
+}
+
+function illuminateYellow1() {
+  clearLights1();
+  document.getElementById('slowLight1').style.backgroundColor = "yellow";
+}
+
+function illuminateGreen1() {
+  clearLights1();
+  document.getElementById('goLight1').style.backgroundColor   = "green";
+}
+
+function clearLights1() {
+  document.getElementById('stopLight1').style.backgroundColor = "black";
+  document.getElementById('slowLight1').style.backgroundColor = "black";
+  document.getElementById('goLight1').style.backgroundColor   = "black";
+}
+
+function illuminateRed2() {
+  clearLights2();
+  document.getElementById('stopLight2').style.backgroundColor = "red";
+}
+
+function illuminateYellow2() {
+  clearLights2();
+  document.getElementById('slowLight2').style.backgroundColor = "yellow";
+}
+
+function illuminateGreen2() {
+  clearLights2();
+  document.getElementById('goLight2').style.backgroundColor   = "green";
+}
+
+function clearLights2() {
+  document.getElementById('stopLight2').style.backgroundColor = "black";
+  document.getElementById('slowLight2').style.backgroundColor = "black";
+  document.getElementById('goLight2').style.backgroundColor   = "black";
+}
+
+function illuminateRed3() {
+  clearLights3();
+  document.getElementById('stopLight3').style.backgroundColor = "red";
+}
+
+function illuminateYellow3() {
+  clearLights3();
+  document.getElementById('slowLight3').style.backgroundColor = "yellow";
+}
+
+function illuminateGreen3() {
+  clearLights3();
+  document.getElementById('goLight3').style.backgroundColor   = "green";
+}
+
+function clearLights3() {
+  document.getElementById('stopLight3').style.backgroundColor = "black";
+  document.getElementById('slowLight3').style.backgroundColor = "black";
+  document.getElementById('goLight3').style.backgroundColor   = "black";
+}
+</script>
+  
+</body>
+</html>
