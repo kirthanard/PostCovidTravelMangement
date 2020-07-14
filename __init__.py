@@ -18,7 +18,7 @@ z=1
   
 @app.route('/')
 def home():
-    return render_template('userlogin.html')
+    return render_template('userprehome.html')
 
 
 # admin site
