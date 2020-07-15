@@ -115,7 +115,8 @@ def findbus():
     con.row_factory = sql.Row
 
     cur = con.cursor()
-    cur.execute("SELECT * FROM buses WHERE source=(?) AND destination=(?) AND rem!=0 AND time=(?)", (src, desti, tradate))
+    cur.execute("SELECT * FROM buses WHERE source=(?) AND destination=(?) AND rem!=0 AND time like (?)", (src, desti,'%'+tradate+'%'))
+
 
     rows = cur.fetchall();
     if (rows):
