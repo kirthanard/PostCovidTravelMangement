@@ -11,5 +11,3 @@ post lockdown travel application
 
 #create a uploads folder for uploading the pictures
 
-#link of google drive for video demonstration:https://drive.google.com/file/d/1-zsQKRG5KNL2iWZAJfmv-UNHE2dsEq12/view?usp=sharing
-
